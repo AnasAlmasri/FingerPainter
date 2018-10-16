@@ -107,6 +107,12 @@ public class FingerPainterView extends View {
         return paint.getColor();
     }
 
+    public void clearCanvas() {
+        bitmap.eraseColor(Color.TRANSPARENT);
+        path.reset();
+        invalidate();
+    }
+
     public void load(Uri uri) {
         this.uri = uri;
     }

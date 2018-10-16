@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class BrushActivity extends AppCompatActivity {
 
+    String BRUSH_COLOR;
     private TextView brushShapeTextView;
     private ImageView brushImageView;
     private ImageView provSquareBrushImageView;
@@ -35,6 +36,8 @@ public class BrushActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brush);
 
+        BRUSH_COLOR = getIntent().getStringExtra("BRUSH_COLOR");
+
         brushShapeTextView = findViewById(R.id.brushShapeTextView);
         brushImageView = findViewById(R.id.brushImageView);
         provSquareBrushImageView = findViewById(R.id.provSquareBrushImageView);
@@ -49,6 +52,10 @@ public class BrushActivity extends AppCompatActivity {
         brushSizeSeekBar.setProgress(75);
 
         hideSizeOptions();
+
+        brushImageView.setColorFilter(Integer.parseInt(BRUSH_COLOR));
+        provRoundBrushImageView.setColorFilter(Integer.parseInt(BRUSH_COLOR));
+        provSquareBrushImageView.setColorFilter(Integer.parseInt(BRUSH_COLOR));
 
         brushSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -130,6 +137,7 @@ public class BrushActivity extends AppCompatActivity {
         brushSizeSeekBar.setVisibility(View.INVISIBLE);
         orBrushSizeTextView.setVisibility(View.INVISIBLE);
         brushSizePixelEditText.setVisibility(View.INVISIBLE);
+        proceedBtn.setVisibility(View.INVISIBLE);
     }
 
     private void showSizeOptions() {
@@ -137,6 +145,7 @@ public class BrushActivity extends AppCompatActivity {
         brushSizeSeekBar.setVisibility(View.VISIBLE);
         orBrushSizeTextView.setVisibility(View.VISIBLE);
         brushSizePixelEditText.setVisibility(View.VISIBLE);
+        proceedBtn.setVisibility(View.VISIBLE);
     }
 
     private void hideShapeOptions() {

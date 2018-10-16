@@ -14,11 +14,14 @@ public class ColorActivity extends AppCompatActivity {
     int redValue = 0;
     int greenValue = 0;
     int blueValue = 0;
+    String BRUSH_COLOR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
+
+        BRUSH_COLOR = getIntent().getStringExtra("BRUSH_COLOR");
 
         final View colorPreviewView = findViewById(R.id.colorPreviewView);
         final SeekBar redSeekbar = findViewById(R.id.redSeekbar);
@@ -29,7 +32,8 @@ public class ColorActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 setRedValue((i * 255) / 100);
-                colorPreviewView.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                BRUSH_COLOR = Integer.toString(Color.rgb(redValue, greenValue, blueValue));
+                colorPreviewView.setBackgroundColor(Integer.parseInt(BRUSH_COLOR));
             }
 
             @Override
@@ -43,7 +47,8 @@ public class ColorActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 setGreenValue((i * 255) / 100);
-                colorPreviewView.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                BRUSH_COLOR = Integer.toString(Color.rgb(redValue, greenValue, blueValue));
+                colorPreviewView.setBackgroundColor(Integer.parseInt(BRUSH_COLOR));
             }
 
             @Override
@@ -57,7 +62,8 @@ public class ColorActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 setBlueValue((i * 255) / 100);
-                colorPreviewView.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                BRUSH_COLOR = Integer.toString(Color.rgb(redValue, greenValue, blueValue));
+                colorPreviewView.setBackgroundColor(Integer.parseInt(BRUSH_COLOR));
             }
 
             @Override
@@ -71,10 +77,7 @@ public class ColorActivity extends AppCompatActivity {
 
     public void proceedBtnOnClick(View v) {
         Intent returnIntent = new Intent();
-
-        int color = Color.rgb(redValue, greenValue, blueValue);
-        String tempStr = Integer.toString(color);
-        returnIntent.putExtra("BRUSH_COLOR", tempStr);
+        returnIntent.putExtra("BRUSH_COLOR", BRUSH_COLOR);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }

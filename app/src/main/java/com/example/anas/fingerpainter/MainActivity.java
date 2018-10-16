@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     FingerPainterView myFingerPainterView;
+    String BRUSH_COLOR = "-16777216"; // black RGB color-int type
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,26 +41,33 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(),
-                        "Failed to receive data from Activity", Toast.LENGTH_LONG).show();
+                        "Brush shape and size were set to default", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 String color = data.getStringExtra("BRUSH_COLOR");
+                BRUSH_COLOR = color;
                 myFingerPainterView.setColour(Integer.parseInt(color));
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(),
-                        "Failed to receive data from Activity", Toast.LENGTH_LONG).show();
+                        "Brush color was set to default", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     public void brushBtnOnClick(View v) {
         Intent brushActivityIntent = new Intent(getApplicationContext(), BrushActivity.class);
+        brushActivityIntent.putExtra("BRUSH_COLOR", BRUSH_COLOR);
         startActivityForResult(brushActivityIntent, 0);
     }
 
     public void colorBtnOnClick(View v) {
         Intent colorActivityIntent = new Intent(getApplicationContext(), ColorActivity.class);
+        colorActivityIntent.putExtra("BRUSH_COLOR", BRUSH_COLOR);
         startActivityForResult(colorActivityIntent, 1);
+    }
+
+    public void clearBtnOnClick(View v) {
+        myFingerPainterView.clearCanvas();
     }
 }
