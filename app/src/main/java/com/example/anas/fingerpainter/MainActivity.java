@@ -2,13 +2,21 @@ package com.example.anas.fingerpainter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         "Brush color was set to default", Toast.LENGTH_LONG).show();
             }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                Uri uri = data.getData();
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    myFingerPainterView.setCanvas(bitmap);
+                    Log.d("MYAPP", String.valueOf(bitmap));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -70,4 +91,18 @@ public class MainActivity extends AppCompatActivity {
     public void clearBtnOnClick(View v) {
         myFingerPainterView.clearCanvas();
     }
+
+    public void loadBtnOnClick(View v) {
+        Intent intent = new Intent();
+
+        // Show only images, no videos or anything else
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
+
+    }
+
+
 }

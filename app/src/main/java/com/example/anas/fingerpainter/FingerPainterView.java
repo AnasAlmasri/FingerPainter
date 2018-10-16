@@ -81,6 +81,7 @@ public class FingerPainterView extends View {
         paint.setStrokeWidth(20);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setARGB(255,0,0,0);
+
     }
 
     public void setBrush(Paint.Cap brush) {
@@ -106,6 +107,8 @@ public class FingerPainterView extends View {
     public int getColour() {
         return paint.getColor();
     }
+
+    public void setCanvas(Bitmap bm) { canvas.drawBitmap(bm, 0, 0, null); }
 
     public void clearCanvas() {
         bitmap.eraseColor(Color.TRANSPARENT);
