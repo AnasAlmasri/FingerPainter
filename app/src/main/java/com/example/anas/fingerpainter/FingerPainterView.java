@@ -21,11 +21,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -49,7 +53,7 @@ public class FingerPainterView extends View {
 
     private Context context;
     private Canvas canvas;
-    private Paint paint;
+    public Paint paint;
     private Bitmap bitmap;
     private Path path;
     private Uri uri;
@@ -81,7 +85,6 @@ public class FingerPainterView extends View {
         paint.setStrokeWidth(20);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setARGB(255,0,0,0);
-
     }
 
     public void setBrush(Paint.Cap brush) {
@@ -110,10 +113,25 @@ public class FingerPainterView extends View {
 
     public void setCanvas(Bitmap bm) { canvas.drawBitmap(bm, 0, 0, null); }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
     public void clearCanvas() {
-        bitmap.eraseColor(Color.TRANSPARENT);
+        bitmap.eraseColor(Color.WHITE);
         path.reset();
         invalidate();
+    }
+
+    public void rotateCanvas() {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        bitmap =  Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        setCanvas(bitmap);
     }
 
     public void load(Uri uri) {

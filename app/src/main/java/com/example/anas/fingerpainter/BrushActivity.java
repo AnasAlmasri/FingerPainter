@@ -123,7 +123,6 @@ public class BrushActivity extends AppCompatActivity {
         if (brushSizePixelEditText.getText().length() != 0) {
             brushSizeEditTextOnTextChanged();
         }
-
         String tempStr = Integer.toString(BRUSH_DIMENSION);
         Intent returnIntent = new Intent();
         returnIntent.putExtra("BRUSH_SIZE", tempStr);

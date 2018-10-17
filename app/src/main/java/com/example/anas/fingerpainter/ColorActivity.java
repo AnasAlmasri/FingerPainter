@@ -33,6 +33,7 @@ public class ColorActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 setRedValue((i * 255) / 100);
                 BRUSH_COLOR = Integer.toString(Color.rgb(redValue, greenValue, blueValue));
+                Log.d("INFO", BRUSH_COLOR);
                 colorPreviewView.setBackgroundColor(Integer.parseInt(BRUSH_COLOR));
             }
 
