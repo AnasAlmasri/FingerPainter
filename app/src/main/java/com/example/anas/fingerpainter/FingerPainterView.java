@@ -111,7 +111,9 @@ public class FingerPainterView extends View {
         return paint.getColor();
     }
 
-    public void setCanvas(Bitmap bm) { canvas.drawBitmap(bm, 0, 0, null); }
+    public void setCanvas(Bitmap bm) {
+        canvas.drawBitmap(bm, 0, 0, null);
+    }
 
     public Bitmap getBitmap() {
         return bitmap;
